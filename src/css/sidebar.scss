@@ -1,0 +1,31 @@
+@import "palette";
+
+.sidebar {
+  top: 0;
+  position: sticky;
+  align-self: flex-start;
+  height: auto;
+  padding: 20px 30px;
+}
+.tagWrapper {
+  display: flex;
+  width: 300px;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(230, 230, 230, 1);
+
+  &:last-child {
+    padding-top: 24px;
+    border-bottom: none;
+  }
+
+  .tag {
+    padding: 8px 12px;
+    border-radius: 50px;
+    background: #eee;
+    text-transform: capitalize;
+    cursor: pointer;
+  }
+}
