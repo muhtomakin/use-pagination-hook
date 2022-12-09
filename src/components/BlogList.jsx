@@ -1,50 +1,30 @@
 import BlogPost from "./BlogPost";
 import Pagination from "./Pagination";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import blogs from "../data/blogs.json";
-import { useEffect } from "react";
+import usePagination from "../hooks/usePagination";
 
 const PAGE_SIZES = [15, 25, 50, 100];
-const paginationData = blogs.posts.slice(0, 15);
 
 function BlogList() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(15)
-  const [currentPaginationData, setCurrentPaginationData] = useState(paginationData)
-  const [numberVisited, setNumberVisited] = useState(0)
+  const [pageSize, setPageSize] = useState(15);
+  const currentPaginationData = usePagination(blogs.posts, pageSize);
+  console.log(currentPaginationData.currentPage);
 
-  const updateRowsPerPage = (e) => { 
-    setPageSize(Number(e))
-    setCurrentPage(1)
-    setCurrentPaginationData(paginationData)
-  };
 
-  const updatePage = (pageNumber) => {
-    
-    setCurrentPage(pageNumber)
-    setNumberVisited((pageNumber-1)*pageSize)
-  };
-
-  useEffect(() => {
-    const newCurrentPaginationData = blogs.posts.slice(numberVisited, numberVisited+pageSize)
-    setCurrentPaginationData(newCurrentPaginationData)
-  }, [pageSize, currentPage])
 
   return (
     <div>
-      <Pagination
-        currentPage={currentPage}
-        totalCount={blogs.posts.length}
+      <Pagination 
+        currentPaginationData={currentPaginationData}
         pageSize={pageSize}
-        pageSizeOptions={PAGE_SIZES}
-        onPageChange={updatePage}
-        onPageSizeOptionChange={updateRowsPerPage}
-      />
+        setPageSize={setPageSize}
+        PAGE_SIZES={PAGE_SIZES}
+      />  
       <ul
-        // Do not remove the aria-label below, it is used for Hatchways automation.
         aria-label="blog list"
       >
-        {currentPaginationData?.map((blog) => (
+        {currentPaginationData.currentData().map((blog) => (
           <BlogPost
             key={blog.id}
             author={blog.author}

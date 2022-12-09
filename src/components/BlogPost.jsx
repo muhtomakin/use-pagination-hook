@@ -8,11 +8,12 @@ function BlogPost({ author, title, excerpt }) {
     <li className="blogsWrapper">
       <div className="blog">
         <div className="imageWrapper">
-          <img
+          {/* <img
             className="authorImage"
             src={`https://joeschmoe.io/api/v1/${author}`}
             alt="Author"
-          />
+          /> */} 
+          {/* +++++++ Cannot fetch the images +++++++ */}
           <p variant="body">{author}</p>
         </div>
 

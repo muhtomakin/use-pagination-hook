@@ -1,56 +1,40 @@
 import "../css/pagination.scss";
 
+import React from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
-import usePagination, { DOTS } from "../hooks/usePagination";
-
-import PropTypes from "prop-types";
-import React from "react";
+import { DOTS } from "../hooks/usePagination";
 import { nanoid } from "nanoid";
 
-function Pagination({
-  onPageChange,
-  onPageSizeOptionChange,
-  totalCount,
-  currentPage,
-  pageSize,
-  pageSizeOptions,
-}) {
-  const paginationRange = usePagination({
-    currentPage,
-    totalCount,
+
+
+
+const Pagination = (props) => {
+  const { 
+    currentPaginationData,
     pageSize,
-  });
-
-  const onNext = () => {
-    onPageChange(currentPage + 1);
-  };
-
-  const onPrevious = () => {
-    onPageChange(currentPage - 1);
-  };
-
+    setPageSize,
+    PAGE_SIZES,
+  } = props;
+  console.log(currentPaginationData.paginationRange)
   return (
     <ul
       className="wrapper"
-      // Do not remove the aria-label below, it is used for Hatchways automation.
       aria-label="Blog post pagination list"
     >
-      {currentPage !== 1 &&
+      {currentPaginationData.currentPage !== 1 &&
         <li className="paginationItem">
           <button
             type="button"
             className="arrowButton left"
-            // Do not remove the aria-label below, it is used for Hatchways automation.
             aria-label="Goto previous page"
-            onClick={onPrevious}
-            disabled={false} // change this line to disable a button.
+            onClick={currentPaginationData.prev}
           >
             <ChevronLeftIcon />
           </button>
         </li>
       }
 
-      {paginationRange.map((pageNumber) => {
+      {currentPaginationData.paginationRange.map((pageNumber) => {
         const key = nanoid();
 
         if (pageNumber === DOTS) {
@@ -65,70 +49,48 @@ function Pagination({
           <li
             key={key}
             className="paginationItem"
-            aria-current="false" // change this line to highlight a current page.
+            aria-current="false"
           >
             <button
               type="button"
-              // Do not remove the aria-label below, it is used for Hatchways automation.
               aria-label={`Goto page ${pageNumber}`}
-              onClick={() => onPageChange(pageNumber)}
+              onClick={() => currentPaginationData.jump(pageNumber)}
             >
               {pageNumber}
             </button>
           </li>
         );
       })}
-      {currentPage !== Math.ceil(totalCount/pageSize) &&
+
+      {currentPaginationData.currentPage !== currentPaginationData.maxPage &&
         <li className="paginationItem">
           <button
             type="button"
             className="arrowButton right"
-            // Do not remove the aria-label below, it is used for Hatchways automation.
             aria-label="Goto next page"
-            onClick={onNext}
-            disabled={false} // change this line to disable a button.
+            onClick={currentPaginationData.next}
           >
             <ChevronRightIcon />
           </button>
         </li>
       }
-      
 
       <select
         className="paginationSelector"
-        // Do not remove the aria-label below, it is used for Hatchways automation.
         aria-label="Select page size"
         value={pageSize}
         onChange={(e) => {
-          onPageSizeOptionChange(e.target.value);
+          setPageSize(e.target.value);
         }}
       >
-        {pageSizeOptions.map((size) => (
+        {PAGE_SIZES.map((size) => (
           <option key={size} defaultValue={pageSize === size} value={size}>
             {size} per page
           </option>
         ))}
       </select>
     </ul>
-  );
+  )
 }
 
-Pagination.propTypes = {
-  totalCount: PropTypes.number,
-  currentPage: PropTypes.number,
-  pageSize: PropTypes.number,
-  pageSizeOptions: PropTypes.instanceOf(Array),
-  onPageChange: PropTypes.func,
-  onPageSizeOptionChange: PropTypes.func,
-};
-
-Pagination.defaultProps = {
-  totalCount: 0,
-  currentPage: 1,
-  pageSize: 1,
-  pageSizeOptions: [15, 25, 50, 100],
-  onPageChange: () => {},
-  onPageSizeOptionChange: () => {},
-};
-
-export default Pagination;
+export default Pagination
