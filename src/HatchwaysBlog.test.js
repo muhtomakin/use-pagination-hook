@@ -1,18 +1,18 @@
 import { render, screen, within } from "@testing-library/react";
 
-import HatchwaysBlog from "./HatchwaysBlog";
+import TomakinBlog from "./TomakinBlog";
 import blogs from "./data/blogs.json";
 import userEvent from "@testing-library/user-event";
 
 // ---------------------------------------------------------------- //
 //                                                                  //
 //                 PLEASE DO NOT MODIFY THIS FILE.                  //
-//               Hatchways automation depends on it.                //
+//               TomakinBlog automation depends on it.                //
 //                                                                  //
 // ---------------------------------------------------------------- //
 
 test("Prev button should exist", async () => {
-  render(<HatchwaysBlog />);
+  render(<TomakinBlog />);
   const previousButton = screen.getByRole("button", {
     name: "Goto previous page",
   });
@@ -21,7 +21,7 @@ test("Prev button should exist", async () => {
 });
 
 test("Next button should exist", async () => {
-  render(<HatchwaysBlog />);
+  render(<TomakinBlog />);
   const nextButton = screen.getByRole("button", {
     name: "Goto next page",
   });
@@ -30,7 +30,7 @@ test("Next button should exist", async () => {
 });
 
 test("First 15 posts should be rendered by default", async () => {
-  render(<HatchwaysBlog />);
+  render(<TomakinBlog />);
   const blogList = screen.getByRole("list", { name: "blog list" });
   const blogItems = within(blogList).getAllByRole("listitem");
 
@@ -51,7 +51,7 @@ test("First 15 posts should be rendered by default", async () => {
 
 test("Changing page size from 15 to 25 should render 25 posts", async () => {
   const user = userEvent.setup();
-  render(<HatchwaysBlog />);
+  render(<TomakinBlog />);
   const pageSizeMenu = screen.getByRole("combobox", {
     name: "Select page size",
   });
@@ -77,7 +77,7 @@ test("Changing page size from 15 to 25 should render 25 posts", async () => {
 });
 
 test("Page 1 is initially selected", async () => {
-  render(<HatchwaysBlog />);
+  render(<TomakinBlog />);
   const currentPage = screen.getByRole("listitem", {
     current: "page",
   });
@@ -87,7 +87,7 @@ test("Page 1 is initially selected", async () => {
 
 test("Page 1 is not selected when page 2 is selected", async () => {
   const user = userEvent.setup();
-  render(<HatchwaysBlog />);
+  render(<TomakinBlog />);
   const pageTwoButton = screen.getByText("2", { selector: "button" });
 
   await user.click(pageTwoButton);
@@ -100,7 +100,7 @@ test("Page 1 is not selected when page 2 is selected", async () => {
 
 test("Prev button should be disabled when page 1 is selected", async () => {
   const user = userEvent.setup();
-  render(<HatchwaysBlog />);
+  render(<TomakinBlog />);
   const pageOneButton = screen.getByText("1", { selector: "button" });
   await user.click(pageOneButton);
 
@@ -112,7 +112,7 @@ test("Prev button should be disabled when page 1 is selected", async () => {
 });
 
 test("All pagination buttons should exist by default", async () => {
-  render(<HatchwaysBlog />);
+  render(<TomakinBlog />);
 
   const paginationList = screen.getByRole("list", {
     name: "Blog post pagination list",

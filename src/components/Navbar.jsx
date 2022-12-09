@@ -6,7 +6,7 @@ import "../css/navbar.scss";
 function Navbar() {
   return (
     <div className="navbarWrapper">
-      <h1 className="title">Hatchways Times</h1>
+      <h1 className="title">Toma Times</h1>
       <div style={{ display: "flex" }}>
         <SearchInput />
         <button type="button" className="subscribeButton">
