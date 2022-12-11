@@ -5,9 +5,6 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
 import { DOTS } from "../hooks/usePagination";
 import { nanoid } from "nanoid";
 
-
-
-
 const Pagination = (props) => {
   const { 
     currentPaginationData,
