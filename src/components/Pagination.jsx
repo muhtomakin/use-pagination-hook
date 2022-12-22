@@ -12,7 +12,7 @@ const Pagination = (props) => {
     setPageSize,
     PAGE_SIZES,
   } = props;
-  console.log(currentPaginationData.paginationRange)
+  console.log(currentPaginationData.currentPage)
   return (
     <ul
       className="wrapper"
@@ -46,7 +46,7 @@ const Pagination = (props) => {
           <li
             key={key}
             className="paginationItem"
-            aria-current="false"
+            aria-current={currentPaginationData.currentPage === pageNumber && "page"}
           >
             <button
               type="button"
